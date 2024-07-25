@@ -3,29 +3,42 @@ const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
 const cloudinary = require("cloudinary");
+const fs = require("fs")
 
 // Create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   let images = [];
-
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
+const path = req.files.images;
+  if (path.length==1) {
+    images.push(path.tempFilePath);
   } else {
-    images = req.body.images;
+    images = path;
   }
 
   const imagesLinks = [];
 
   for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
+    const result = await cloudinary.v2.uploader.upload(images[i].tempFilePath, {
       folder: "products",
     });
+ 
 
     imagesLinks.push({
       public_id: result.public_id,
       url: result.secure_url,
     });
   }
+  path.map((path)=>(
+    fs.unlink(path.tempFilePath, (err) => {
+      if (err) {
+        console.error('Error deleting local file:', err);
+        
+      }
+
+      
+    })
+  ))
+   
 
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
@@ -43,17 +56,28 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
-    .search()
-    .filter();
 
-  let products = await apiFeature.query;
+  const {category,minprice,maxprice} = req.query;
+  
+  let query = {};
 
-  let filteredProductsCount = products.length;
+  // Add category to the query if it exists
+  if (category) {
+    query.category = category;
+  }
 
-  apiFeature.pagination(resultPerPage);
-
-  products = await apiFeature.query;
+  // Add price range to the query if minprice and maxprice exist
+  if (minprice || maxprice) {
+    query.price = {};
+    if (minprice) {
+      query.price.$gte = parseFloat(minprice);
+    }
+    if (maxprice) {
+      query.price.$lte = parseFloat(maxprice);
+    }
+  }
+  const products = await Product.find(query);
+  const filteredProductsCount = products.length;
 
   res.status(200).json({
     success: true,

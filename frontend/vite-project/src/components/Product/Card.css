@@ -1,0 +1,36 @@
+/*Card css*/
+
+.card{
+    height: 17rem;
+    width: 13rem;
+    padding: 15px;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items: start;
+    margin: 10px;
+    border: 0.1px solid rgb(207, 197, 197);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.05);
+}
+.card .cardLink{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items: start;
+}
+.card img{
+    height: 60%;
+    object-fit:contain;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+
+.cardLink{
+    text-decoration: none;
+    color: black;
+}
+
+.card span{
+    font-weight: bolder;
+}

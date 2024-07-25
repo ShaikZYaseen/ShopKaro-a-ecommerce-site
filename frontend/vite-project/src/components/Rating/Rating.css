@@ -1,0 +1,14 @@
+.dialog-title {
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+  
+  .rating-container {
+    margin-bottom: 16px;
+  }
+  

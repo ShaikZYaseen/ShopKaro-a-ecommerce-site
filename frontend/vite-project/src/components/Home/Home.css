@@ -1,0 +1,121 @@
+.Home-one{
+    width: 100%;
+   
+    height: 90vh;
+    z-index: 1;
+    display: flex;
+    justify-content:center;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.Home{
+    margin-top: 68px;
+    width: 100%;
+    overflow-x: hidden;
+}
+.Home .Home-one p{
+    padding-bottom: 25px;
+    font-weight: bold;
+}
+
+.Home-one-line1{
+    font-size: 40px;
+}
+.Home-one-line2{
+    font-size: 70px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.Home-one-line3{
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+@media(max-width:600px){
+    .Home .Home-one p{
+        padding-bottom: 25px;
+        font-weight: bold;
+    }
+    
+    .Home-one-line1{
+        font-size: 28px;
+    }
+    .Home-one-line2{
+        font-size: 40px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    .Home-one-line3{
+        font-size: 13px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+}
+.Home-two{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.Home-two-two{
+    width: 80vw;
+    height: 100%;
+    display: flex;
+    align-content: flex-start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+
+
+.loader{
+    margin-top: 40vh;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
+/*Filter options css*/
+
+
+
+.Home-two-one{
+    width: 20vw;
+    height: 100vh;
+}
+
+.Home-two-one{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.Home-two-one input{
+    height: 24px;
+    width: 40px;
+    border: none;
+    color: black;
+    border: 0.5px solid black;
+    border-radius: 5px;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  border: none;
+}
+.input{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.Home-two-one li{
+    list-style: none;
+    cursor: pointer;
+}
+.Home-two-one li:hover{
+    text-decoration-line: underline;
+}
+.Home-two-one li{
+    padding: 5px;
+}
+.Home-two-one h2{
+    margin-top: 20px;
+}

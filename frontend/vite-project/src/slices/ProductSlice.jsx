@@ -60,6 +60,16 @@ const productDetailsSlice = createSlice({
   },
 });
 
+const initialProductReviewsState = {
+  productReviews:[],
+  status: 'idle',
+  error: null,
+
+}
+
+
+
+
 // Export reducers for configuration
 export const productReducer = productSlice.reducer;
 export const productDetailsReducer = productDetailsSlice.reducer;

@@ -158,3 +158,16 @@
 .reviewdiv::-webkit-scrollbar {
     display: none;
 }
+.reviews h2{
+  text-align: center;
+}
+.qty{
+  width: 25px;
+}
+.qtyp{
+  font-weight: bold;
+}
+.reviewh{
+  text-align: center;
+  padding-bottom: 30px;
+}

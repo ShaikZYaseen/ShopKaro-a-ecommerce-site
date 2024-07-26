@@ -4,7 +4,7 @@ import {productReducer,productDetailsReducer} from '../slices/ProductSlice.jsx';
 const store = configureStore({
   reducer: {
     products: productReducer,
-    productDetails:productDetailsReducer
+    productDetails:productDetailsReducer,
   },
   devTools: true, 
 });

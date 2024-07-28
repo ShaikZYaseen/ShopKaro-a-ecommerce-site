@@ -27,9 +27,13 @@ const ProductDetails = () => {
     const handleQuantityChange = (event) => {
         const value = event.target.value;
         if (value > productDetails.product.Stock) {
+            setQuantity(productDetails.product.Stock);
             setQuantityError('Quantity exceeds stock.');
         } else if (value < 0) {
+            setQuantity(1);
+
             setQuantityError('Quantity cannot be negative.');
+
         } else {
             setQuantityError('');
         }
@@ -75,7 +79,7 @@ const ProductDetails = () => {
 
                 <Rating className='rating' name="half-rating" value={productDetails.product.ratings} precision={0.5} readOnly />
                 <p className='stock'>In stock: <span className='stockcount'>{productDetails.product.Stock}</span></p>
-                <p className='qtyp'>Quantity:<input onChange={handleQuantityChange} className='qty' type="number" /></p>
+                <p className='qtyp'>Quantity:<input onChange={handleQuantityChange} value={quantity} className='qty' type="number" /></p>
                 {quantityError && <Alert severity="error">{quantityError}</Alert>}
                 <div className='buttons'>
                     <button>Add to cart</button>

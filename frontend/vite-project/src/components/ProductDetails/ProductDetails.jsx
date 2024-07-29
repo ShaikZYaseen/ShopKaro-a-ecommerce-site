@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import { Box, Typography, CircularProgress, Alert } from '@mui/material';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProductDetails } from '../../thunks/ProductThunk';
 import { useParams } from 'react-router-dom';
 import './ProductDetails.css';
 import ME from '../../../Assets/ME.jpeg';
-import Ratingcom from '../Rating/Rating';
+import RatingCom from '../Rating/Rating';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -25,19 +24,17 @@ const ProductDetails = () => {
     const reviews = productDetails?.product?.reviews || [];
 
     const handleQuantityChange = (event) => {
-        const value = event.target.value;
-        if (value > productDetails.product.Stock) {
+        const value = Number(event.target.value);
+        if (isNaN(value) || value < 1) {
+            setQuantity(1);
+            setQuantityError('Quantity cannot be less than 1.');
+        } else if (value > productDetails.product.Stock) {
             setQuantity(productDetails.product.Stock);
             setQuantityError('Quantity exceeds stock.');
-        } else if (value < 0) {
-            setQuantity(1);
-
-            setQuantityError('Quantity cannot be negative.');
-
         } else {
+            setQuantity(value);
             setQuantityError('');
         }
-        setQuantity(value);
     };
 
     const handlePrev = () => {
@@ -63,13 +60,29 @@ const ProductDetails = () => {
     return (
         <div className='ProductDetails'>
             <div className="carousel-container">
-                <button className="carousel-button prev-button" onClick={handlePrev}>❮</button>
+                <button 
+                    className="carousel-button prev-button" 
+                    onClick={handlePrev} 
+                    aria-label="Previous image"
+                >
+                    ❮
+                </button>
                 <div className="carousel-image-container">
                     {images.length > 0 && (
-                        <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} className="carousel-image" />
+                        <img 
+                            src={images[currentIndex]} 
+                            alt={`Slide ${currentIndex + 1}`} 
+                            className="carousel-image" 
+                        />
                     )}
                 </div>
-                <button className="carousel-button next-button" onClick={handleNext}>❯</button>
+                <button 
+                    className="carousel-button next-button" 
+                    onClick={handleNext} 
+                    aria-label="Next image"
+                >
+                    ❯
+                </button>
             </div>
             <div className='ProductDetails-info'>
                 <h1>{productDetails.product.name}</h1>
@@ -77,14 +90,31 @@ const ProductDetails = () => {
                 <p>{productDetails.product.description}</p>
                 <p>Price:<span>₹{productDetails.product.price}</span></p>
 
-                <Rating className='rating' name="half-rating" value={productDetails.product.ratings} precision={0.5} readOnly />
-                <p className='stock'>In stock: <span className='stockcount'>{productDetails.product.Stock}</span></p>
-                <p className='qtyp'>Quantity:<input onChange={handleQuantityChange} value={quantity} className='qty' type="number" /></p>
+                <Rating 
+                    className='rating' 
+                    name="half-rating" 
+                    value={productDetails.product.ratings} 
+                    precision={0.5} 
+                    readOnly 
+                />
+                <p className='stock'>
+                    In stock: <span className='stockcount'>{productDetails.product.Stock}</span>
+                </p>
+                <p className='qtyp'>
+                    Quantity:
+                    <input 
+                        onChange={handleQuantityChange} 
+                        value={quantity} 
+                        className='qty' 
+                        type="number" 
+                        min="1" 
+                    />
+                </p>
                 {quantityError && <Alert severity="error">{quantityError}</Alert>}
                 <div className='buttons'>
                     <button>Add to cart</button>
                     <button>Buy now</button>
-                    <Ratingcom />
+                    <RatingCom id={id}/>
                 </div>
             </div>
 

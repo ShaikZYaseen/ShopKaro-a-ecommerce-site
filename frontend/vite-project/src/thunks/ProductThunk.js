@@ -40,3 +40,13 @@ export const fetchProductDetails = createAsyncThunk(
 )
 
 
+export const addReview = createAsyncThunk('product/addReview',async({ rating, comment, productId })=>{
+  try {
+    let link =  `http://localhost:8080/api/v1/review`;
+    const response = await axios.post(rating, comment, productId );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching product details:", error);
+    throw error;
+  }
+})

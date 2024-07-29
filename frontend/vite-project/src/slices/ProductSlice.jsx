@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchProducts,
-  fetchProductDetails
+  fetchProductDetails,
+  addReview
 } from '../thunks/ProductThunk.js';
 
 // Define the initial state for products
@@ -60,12 +61,38 @@ const productDetailsSlice = createSlice({
   },
 });
 
-const initialProductReviewsState = {
-  productReviews:[],
+
+
+// Define the initial state for product details
+const initialReviewState = {
+  reviews: null,
   status: 'idle',
   error: null,
+};
 
-}
+
+// Create a slice for product details
+const addReviewSlice = createSlice({
+  name: 'productDetails',
+  initialState: initialReviewState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addReview.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(addReview.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.reviews = action.payload;
+      })
+      .addCase(addReview.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
+});
+
+
 
 
 
@@ -73,3 +100,5 @@ const initialProductReviewsState = {
 // Export reducers for configuration
 export const productReducer = productSlice.reducer;
 export const productDetailsReducer = productDetailsSlice.reducer;
+export const addReviewReducer = addReviewSlice.reducer;
+

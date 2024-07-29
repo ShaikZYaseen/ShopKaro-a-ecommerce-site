@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Rating, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close'; // Proper import for CloseIcon
 import './Rating.css';
-const CloseIcon = 'X'
+import { addReview } from '../../thunks/ProductThunk';
 
-const Ratingcom = () => {
+const RatingCom = (props) => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const dispatch = useDispatch(); // Correctly setting up the dispatch hook
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,9 +20,18 @@ const Ratingcom = () => {
   };
 
   const handleSubmit = () => {
-    // Handle the form submission here
-    console.log('Rating:', rating);
-    console.log('Comment:', comment);
+    // Handling the form submission here
+    const review = {
+      productId: props.id,
+      rating,
+      comment,
+    };
+    console.log(review)
+
+    // Dispatch the addReview action with the review data
+    dispatch(addReview(review ));
+
+    // Close the dialog
     setOpen(false);
   };
 
@@ -75,4 +87,4 @@ const Ratingcom = () => {
   );
 };
 
-export default Ratingcom;
+export default RatingCom;

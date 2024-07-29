@@ -8,7 +8,6 @@ const cloudinary = require("cloudinary");
 
 // Register a User
   exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-
     const path = req.files.avatar;
     const myCloud = await cloudinary.v2.uploader.upload(path.tempFilePath, {
       folder: "avatars",
@@ -17,7 +16,7 @@ const cloudinary = require("cloudinary");
     });
 
     const { name, email, password } = req.body;
-
+    
     const user = await User.create({
       name,
       email,
@@ -27,6 +26,7 @@ const cloudinary = require("cloudinary");
         url: myCloud.secure_url,
       },
     });
+
 
     sendToken(user, 201, res);
   });

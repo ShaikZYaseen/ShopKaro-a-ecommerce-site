@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-//Signup
+// Signup
 export const signup = createAsyncThunk(
   'users/signup',
-  async (form) => {
+  async (form, { rejectWithValue }) => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/register', form, {
         headers: {
@@ -14,25 +14,42 @@ export const signup = createAsyncThunk(
       // Return the response data to be used in the slice
       return response.data;
     } catch (error) {
-      // Return the error message or custom error object
-      return error.response.data || 'An error occurred.';
+      // Use rejectWithValue to properly handle errors in the thunk
+      return rejectWithValue(error.response.data || 'An error occurred.');
     }
   }
 );
 
-
-
-//Login
+// Login
 export const login = createAsyncThunk(
   'users/login',
-  async (form) => {
+  async (form, { rejectWithValue }) => {
     try {
       const response = await axios.post('http://localhost:8080/api/v1/login', form);
       // Return the response data to be used in the slice
-      return response.data
+      localStorage.setItem('user', JSON.stringify(response.data));
+      return response.data;
     } catch (error) {
-      // Return the error message or custom error object
-      return error.response.data || 'An error occurred.';
+      // Use rejectWithValue to properly handle errors in the thunk
+      return rejectWithValue(error.response.data || 'An error occurred.');
+    }
+  }
+);
+
+// Logout
+export const logout = createAsyncThunk(
+  'users/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      console.log("Hello")
+      const response = await axios.get('http://localhost:8080/api/v1/logout');
+      // Return the response data to be used in the slice
+      console.log(response.data)
+      localStorage.removeItem('user');
+      return response.data;
+    } catch (error) {
+      // Use rejectWithValue to properly handle errors in the thunk
+      return rejectWithValue(error.response.data || 'An error occurred.');
     }
   }
 );

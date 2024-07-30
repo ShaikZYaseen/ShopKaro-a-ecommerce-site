@@ -47,7 +47,7 @@ const RatingCom = (props) => {
             edge="end"
             color="inherit"
             onClick={handleClose}
-            aria-label="close"
+            inert="true"
             className="close-button"
           >
             <CloseIcon />

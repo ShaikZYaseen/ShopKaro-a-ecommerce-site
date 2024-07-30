@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,19 +13,44 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { logout } from '../../thunks/UserThunk';
 import { Link } from 'react-router-dom';
-import "./Header.css"
+import "./Header.css";
 
 const pages = ['Home', 'Product', 'Contact', 'About'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const allSettings = ['Profile', 'Account', 'Dashboard', 'Login', 'Signup', 'Logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [settings, setSettings] = React.useState([]);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  // Access logout status from Redux store
+  const logoutStatus = useSelector(state => state.logout.status);
+  
+  // Determine isLoggedIn based on logout status
+  const [isLoggedIn, setIsLoggedIn] = React.useState(logoutStatus !== 'succeeded');
+
+  React.useEffect(() => {
+    // Update isLoggedIn when logout status changes
+    setIsLoggedIn(logoutStatus !== 'succeeded');
+  }, [logoutStatus]);
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      setSettings(allSettings.filter(setting => setting !== 'Login' && setting !== 'Signup'));
+    } else {
+      setSettings(allSettings.filter(setting => setting !== 'Logout' && setting !== 'Profile' && setting !== 'Account' && setting !== 'Dashboard'));
+    }
+  }, [isLoggedIn]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -34,6 +61,16 @@ function Header() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const logoutt = async () => {
+    try {
+      await dispatch(logout()).unwrap();  // Ensure the logout action is called and awaited
+      localStorage.removeItem('user');
+      navigate("/signup");  // Redirect to signup page
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -155,7 +192,11 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu} sx={{ textTransform: 'none', '&:hover': { opacity: 0.8 } }}>
+                <MenuItem 
+                  key={setting} 
+                  onClick={setting === 'Logout' ? logoutt : handleCloseUserMenu} 
+                  sx={{ textTransform: 'none', '&:hover': { opacity: 0.8 } }}
+                >
                   <Typography textAlign="center">
                     <Link to={`/${setting.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                       {setting}

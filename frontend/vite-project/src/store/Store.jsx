@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import {productReducer,productDetailsReducer,addReviewReducer} from '../slices/ProductSlice.jsx';
-import { signupReducer,loginReducer } from '../slices/UserSlice.jsx'; 
+import { signupReducer,loginReducer,logoutReducer } from '../slices/UserSlice.jsx'; 
 
 const store = configureStore({
   reducer: {
@@ -8,7 +8,8 @@ const store = configureStore({
     productDetails:productDetailsReducer,
     reviews:addReviewReducer,
     signup:signupReducer,
-    login:loginReducer
+    login:loginReducer,
+    logout:logoutReducer
   },
   devTools: true, 
 });

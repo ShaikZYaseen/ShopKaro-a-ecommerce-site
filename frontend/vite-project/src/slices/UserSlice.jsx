@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signup, login } from '../thunks/UserThunk';
+import { signup, login, logout } from '../thunks/UserThunk';
+
+const storedUser = JSON.parse(localStorage.getItem('user'));
 
 // Define the initial state for both signup and login
 const initialState = {
-  user: {},
+  user: storedUser||{},
   status: 'idle',
   error: null,
 };
@@ -62,8 +64,43 @@ const loginSlice = createSlice({
   },
 });
 
+
+
+const initialState2 = {
+  user:{},
+  status: 'idle',
+  error: null,
+};
+
+// Create a slice for user signup
+const logoutSlice = createSlice({
+  name: 'logout',
+  initialState:initialState2,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(logout.pending, (state) => {
+        state.status = 'loading';
+        state.error = null; // Clear previous errors if any
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload; // Store user data
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message; // Store error message
+      });
+  },
+});
+
+
+
+
+
 // Export the reducers
 export const signupReducer = signupSlice.reducer;
 export const loginReducer = loginSlice.reducer;
+export const logoutReducer = logoutSlice.reducer;
 
 

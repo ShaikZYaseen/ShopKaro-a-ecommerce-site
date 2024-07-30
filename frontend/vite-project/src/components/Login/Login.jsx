@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("s");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -17,11 +17,10 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (status === 'succeeded') {
-      setSuccessMessage('User registered successfully');
+      setSuccessMessage('User logged in successfully');
       setErrorMessage('');
       setTimeout(() => {
-        navigate('/');
-
+        navigate('/'); // Redirect to the home page or any other page after login
       }, 1500);
     } else if (status === 'failed') {
       setErrorMessage('An error occurred. Please try again.');
@@ -41,7 +40,12 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
+    if (!email || !password) {
+      setErrorMessage('Please enter both email and password');
+      return;
+    }
+
     const form = {
       email,
       password
@@ -64,6 +68,7 @@ const LoginForm = () => {
                 className="input"
                 placeholder="Email"
                 value={email}
+                autoComplete="off" 
                 onChange={handleEmailChange}
                 aria-label="Email"
               />
@@ -72,6 +77,7 @@ const LoginForm = () => {
                 className="input"
                 placeholder="Password"
                 value={password}
+                autoComplete="off" 
                 onChange={handlePasswordChange}
                 aria-label="Password"
               />

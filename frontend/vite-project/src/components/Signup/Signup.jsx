@@ -7,7 +7,7 @@ import './Signup.css';
 
 const SignUpForm = () => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('s');
   const [password, setPassword] = useState('');
   const [avatar, setAvatar] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -15,14 +15,14 @@ const SignUpForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const status = useSelector(state => state.signup.status); // Correct status access
+  const status = useSelector(state => state.signup.status); 
 
   useEffect(() => {
     if (status === 'succeeded') {
       setSuccessMessage('User registered successfully');
       setErrorMessage('');
       setTimeout(() => {
-        navigate('/');
+        navigate('/login');
 
       }, 1500);
     } else if (status === 'failed') {

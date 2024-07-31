@@ -25,9 +25,10 @@ export const login = createAsyncThunk(
   'users/login',
   async (form, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/login', form);
+      const response = await axios.post('http://localhost:8080/api/v1/login', form,{ withCredentials: true });
       // Return the response data to be used in the slice
       localStorage.setItem('user', JSON.stringify(response.data));
+      console.log(response.data)
       return response.data;
     } catch (error) {
       // Use rejectWithValue to properly handle errors in the thunk

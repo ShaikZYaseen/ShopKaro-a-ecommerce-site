@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {productReducer,productDetailsReducer,addReviewReducer} from '../slices/ProductSlice.jsx';
+import {productReducer,productDetailsReducer,addReviewReducer, addCartReducer} from '../slices/ProductSlice.jsx';
 import { signupReducer,loginReducer,logoutReducer } from '../slices/UserSlice.jsx'; 
 
 const store = configureStore({
@@ -9,7 +9,8 @@ const store = configureStore({
     reviews:addReviewReducer,
     signup:signupReducer,
     login:loginReducer,
-    logout:logoutReducer
+    logout:logoutReducer,
+    cart:addCartReducer
   },
   devTools: true, 
 });

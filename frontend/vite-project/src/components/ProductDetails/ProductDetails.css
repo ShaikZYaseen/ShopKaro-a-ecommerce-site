@@ -111,7 +111,9 @@
   .buttons button{
     height: 45px;
     width: 200px;
+    margin-bottom: 10px;
     border: none;
+    cursor: pointer;
     color: white;
     background-color: #1976D2;
     border-radius: 10px;

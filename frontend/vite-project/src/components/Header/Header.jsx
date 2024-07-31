@@ -17,7 +17,7 @@ import { logout } from '../../thunks/UserThunk';
 import { Link } from 'react-router-dom';
 import "./Header.css";
 
-const pages = ['Home', 'Product', 'Contact', 'About'];
+const pages = ['Home', 'Product', 'About', 'Cart'];
 const allSettings = ['Profile', 'Account', 'Dashboard', 'Login', 'Signup', 'Logout'];
 
 function Header() {
@@ -67,6 +67,7 @@ function Header() {
     try {
       await dispatch(logout()).unwrap();  // Ensure the logout action is called and awaited
       localStorage.removeItem('user');
+      localStorage.removeItem('cart');
       navigate("/signup");  // Redirect to signup page
     } catch (error) {
       console.error("Logout failed:", error);

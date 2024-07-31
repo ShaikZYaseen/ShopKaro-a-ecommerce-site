@@ -52,3 +52,18 @@ export const addReview = createAsyncThunk(
     }
   }
 );
+
+
+
+export const addCart = createAsyncThunk(
+  'product/addCart',
+  async (form, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/cart',form,{ withCredentials: true });
+      return response.data;
+    } catch (error) {
+      console.error("Error adding review:", error);
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);

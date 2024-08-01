@@ -67,3 +67,17 @@ export const addCart = createAsyncThunk(
     }
   }
 );
+
+
+export const getCart = createAsyncThunk('product/getCart', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/cart', {
+      withCredentials: true
+    });
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return rejectWithValue(error.response ? error.response.data : error.message);
+  }
+});

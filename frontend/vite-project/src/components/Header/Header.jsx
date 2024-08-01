@@ -66,8 +66,6 @@ function Header() {
   const logoutt = async () => {
     try {
       await dispatch(logout()).unwrap();  // Ensure the logout action is called and awaited
-      localStorage.removeItem('user');
-      localStorage.removeItem('cart');
       navigate("/signup");  // Redirect to signup page
     } catch (error) {
       console.error("Logout failed:", error);

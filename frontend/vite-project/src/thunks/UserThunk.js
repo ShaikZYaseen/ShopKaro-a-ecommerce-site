@@ -28,7 +28,6 @@ export const login = createAsyncThunk(
       const response = await axios.post('http://localhost:8080/api/v1/login', form,{ withCredentials: true });
       // Return the response data to be used in the slice
       localStorage.setItem('user', JSON.stringify(response.data));
-      console.log(response.data)
       return response.data;
     } catch (error) {
       // Use rejectWithValue to properly handle errors in the thunk
@@ -42,10 +41,8 @@ export const logout = createAsyncThunk(
   'users/logout',
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Hello")
-      const response = await axios.get('http://localhost:8080/api/v1/logout');
+      const response = await axios.get('http://localhost:8080/api/v1/logout',{ withCredentials: true });
       // Return the response data to be used in the slice
-      console.log(response.data)
       localStorage.removeItem('user');
       return response.data;
     } catch (error) {

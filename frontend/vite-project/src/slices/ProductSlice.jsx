@@ -3,7 +3,8 @@ import {
   fetchProducts,
   fetchProductDetails,
   addReview,
-  addCart
+  addCart,
+  getCart
 } from '../thunks/ProductThunk.js';
 
 // Define the initial state for products
@@ -84,7 +85,7 @@ const addReviewSlice = createSlice({
       })
       .addCase(addReview.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.push(action.payload);
+        state.reviews.push(action.payload);
       })
       .addCase(addReview.rejected, (state, action) => {
         state.status = 'failed';
@@ -125,6 +126,37 @@ const addCartP = createSlice({
 
 
 
+// Define the initial state for product details
+const initialgetcartState = {
+  cart: null,
+  status: 'idle',
+  error: null,
+};
+
+
+// Create a slice for product details
+const getCartP = createSlice({
+  name: 'getCart',
+  initialState: initialgetcartState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCart.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getCart.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.cart = action.payload;
+      })
+      .addCase(getCart.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
+});
+
+
+
 
 
 
@@ -133,5 +165,5 @@ export const productReducer = productSlice.reducer;
 export const productDetailsReducer = productDetailsSlice.reducer;
 export const addReviewReducer = addReviewSlice.reducer;
 export const addCartReducer = addCartP.reducer;
-
+export const getCartReducer = getCartP.reducer;
 

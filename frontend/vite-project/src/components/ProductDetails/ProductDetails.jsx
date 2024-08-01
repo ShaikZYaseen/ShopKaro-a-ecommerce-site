@@ -68,10 +68,7 @@ const ProductDetails = () => {
         }
     }, [notification]);
 
-    if (cart && cart.success) {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
+   
     const handleQuantityChange = (event) => {
         const value = Number(event.target.value);
         if (isNaN(value) || value < 1) {

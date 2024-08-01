@@ -46,8 +46,9 @@ exports.removeCart = catchAsyncErrors(async(req,res,next)=>{
 
 
 exports.getCart = catchAsyncErrors(async(req,res,next)=>{
-    const { userId } = req.params;
+    const userId = req.user._id;
     const cart = await Cart.findOne({ userId }).populate('items.productId');
+
     res.status(200).json({cart,
         success: true,
 });

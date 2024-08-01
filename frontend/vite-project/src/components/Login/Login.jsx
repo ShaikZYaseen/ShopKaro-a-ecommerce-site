@@ -13,12 +13,18 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const status = useSelector(state => state.login.status); // Adjust based on your actual state structure
+  const {status} = useSelector(state => state.login); // Adjust based on your actual state structure
+
+  
+
+
+  
 
   useEffect(() => {
     if (status === 'succeeded') {
       setSuccessMessage('User logged in successfully');
       setErrorMessage('');
+      
       setTimeout(() => {
         navigate('/'); // Redirect to the home page or any other page after login
       }, 1500);

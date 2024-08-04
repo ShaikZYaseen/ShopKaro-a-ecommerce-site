@@ -74,10 +74,29 @@ export const getCart = createAsyncThunk('product/getCart', async (_, { rejectWit
     const response = await axios.get('http://localhost:8080/api/v1/cart', {
       withCredentials: true
     });
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error fetching cart:", error);
     return rejectWithValue(error.response ? error.response.data : error.message);
   }
 });
+
+
+
+export const removeCart = createAsyncThunk(
+  'product/removeCart',
+  async (form, { rejectWithValue }) => {
+    try {
+      console.log(form);
+      // Pass `form` in the `data` property for DELETE requests
+      const response = await axios.delete('http://localhost:8080/api/v1/cart', {
+        data: form,
+        withCredentials: true,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error removing cart item:", error);
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);

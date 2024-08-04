@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCart } from '../../thunks/ProductThunk';
@@ -11,28 +11,35 @@ function Cart() {
   const dispatch = useDispatch();
 
   const { user } = useSelector(state => state.login);
-  const { cart } = useSelector(state => state.showCart);
+  const { cart, status, error } = useSelector(state => state.showCart); // Assuming you have status and error in your state
 
+  const [loading, setLoading] = useState(true);
   const items = useMemo(() => cart?.cart.items, [cart]);
 
   useEffect(() => {
     if (user?.user) {
-      dispatch(getCart());
+      dispatch(getCart())
+        .finally(() => setLoading(false)); // Set loading to false once the dispatch completes
     } else {
       navigate("/signup");
     }
   }, [user, dispatch, navigate]);
 
-  if (!items) {
-    return null;
+  if (loading) {
+    return <div className="loading">Loading...</div>;
   }
 
   return (
     <div className="cart">
       <h1>Shopping Cart</h1>
-      {items.map(item => (
-        <CartCard key={item.productId._id} item={item} />
-      ))}
+      {error && <p className="error">{error}</p>}
+      {items.length > 0 ? (
+        items.map(item => (
+          <CartCard key={item.productId._id} item={item} />
+        ))
+      ) : (
+        <h2 className='cartline'>Your cart is empty!</h2>
+      )}
     </div>
   );
 }

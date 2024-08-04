@@ -30,7 +30,9 @@ exports.addCart = catchAsyncErrors(async(req,res,next)=>{
 
 
 exports.removeCart = catchAsyncErrors(async(req,res,next)=>{
-    const { userId, productId } = req.body;
+    const {  productId } = req.body;
+    const userId = req.user._id;
+
     const cart = await Cart.findOne({ userId });
   
     if (cart) {

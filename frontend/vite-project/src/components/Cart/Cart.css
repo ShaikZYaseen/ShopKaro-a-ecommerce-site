@@ -3,5 +3,10 @@
     padding: 20px;
 }
 h1{
-    font-family:'Times New Roman', Times, serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.cartline{
+    text-align: center;
+    color: rgb(234, 55, 55);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

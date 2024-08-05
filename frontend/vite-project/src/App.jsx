@@ -9,6 +9,7 @@ import ProductDetails from './components/ProductDetails/ProductDetails.jsx';
 import Signup from "./components/Signup/Signup.jsx"
 import Login from './components/Login/Login.jsx';
 import Cart from './components/Cart/Cart.jsx';
+import Address from './components/Address/Address.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/login" element={<Login/>} />
       <Route path="/product/:id" element={<ProductDetails/>}/>
       <Route path="/cart" element={<Cart/>} />
+      <Route path="/address" element={<Address/>}/>
       </Routes>
       <FooterComponent/>
     </Router>

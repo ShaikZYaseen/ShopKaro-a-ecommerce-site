@@ -24,12 +24,18 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [settings, setSettings] = React.useState([]);
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   // Access logout status from Redux store
   const logoutStatus = useSelector(state => state.logout.status);
+
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  const   img = user.user.avatar.url;
+  console.log(img)
   
   // Determine isLoggedIn based on logout status
   const [isLoggedIn, setIsLoggedIn] = React.useState(logoutStatus !== 'succeeded');
@@ -71,6 +77,7 @@ function Header() {
       console.error("Logout failed:", error);
     }
   };
+
 
   return (
     <AppBar position="fixed">
@@ -171,7 +178,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <img src={img} alt="profile"/>
               </IconButton>
             </Tooltip>
             <Menu

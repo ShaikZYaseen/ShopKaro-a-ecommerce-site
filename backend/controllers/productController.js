@@ -8,37 +8,52 @@ const fs = require("fs")
 // Create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   let images = [];
-const path = req.files.images;
-  if (path.length==1) {
-    images.push(path.tempFilePath);
+  const files = req.files.images;
+
+  // Ensure files are handled as an array
+  if (!Array.isArray(files)) {
+    images.push(files.tempFilePath);
   } else {
-    images = path;
+    images = files.map(file => file.tempFilePath);
   }
 
   const imagesLinks = [];
 
   for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i].tempFilePath, {
+    const result = await cloudinary.v2.uploader.upload(images[i], {
       folder: "products",
     });
- 
 
     imagesLinks.push({
       public_id: result.public_id,
       url: result.secure_url,
     });
   }
-  path.map((path)=>(
-    fs.unlink(path.tempFilePath, (err) => {
+
+  // Ensure images is treated as an array before mapping over it
+  if (Array.isArray(files)) {
+    files.map(file => {
+      fs.unlink(file.tempFilePath, (err) => {
+        if (err) {
+          console.error('Error deleting local file:', err);
+        }
+      });
+    });
+  } else {
+    fs.unlink(files.tempFilePath, (err) => {
       if (err) {
         console.error('Error deleting local file:', err);
-        
       }
+    });
+  }
 
-      
-    })
-  ))
-   
+  console.log("ok");
+  console.log(req.body);
+
+  req.body.user = req.user.id;
+  req.body.reviews = req.body.reviews || [];
+  req.body.numOfReviews = req.body.numOfReviews || 0;
+  req.body.ratings = req.body.ratings || 0;
 
   req.body.images = imagesLinks;
   req.body.user = req.user.id;

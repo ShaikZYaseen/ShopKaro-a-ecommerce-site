@@ -34,8 +34,8 @@ function Header() {
 
 
   const user = JSON.parse(localStorage.getItem('user'));
-  const   img = user.user.avatar.url;
-  console.log(img)
+  const   img = "";
+  
   
   // Determine isLoggedIn based on logout status
   const [isLoggedIn, setIsLoggedIn] = React.useState(logoutStatus !== 'succeeded');

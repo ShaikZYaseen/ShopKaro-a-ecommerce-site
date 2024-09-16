@@ -13,7 +13,8 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {status} = useSelector(state => state.login); // Adjust based on your actual state structure
+  const {status,user} = useSelector(state => state.login); // Adjust based on your actual state structure
+  console.log(user)
 
   
 

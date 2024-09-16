@@ -187,8 +187,8 @@ const ProductDetails = () => {
                 </p>
                 {quantityError && <Alert severity="error">{quantityError}</Alert>}
                 <div className='buttons'>
-                    <button onClick={handleCartClick}>Add to cart</button>
-                    <button>Buy now</button>
+                    <button id='btnn' onClick={handleCartClick}>Add to cart</button>
+                    <button id='btnn'>Buy now</button>
                     <RatingCom id={id}/>
                 </div>
                 {notification && <Alert severity="success">{notification}</Alert>}

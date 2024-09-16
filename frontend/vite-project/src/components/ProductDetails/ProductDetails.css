@@ -14,6 +14,7 @@
     align-items: center;
 }
 
+
 .carousel-container {
     position: relative;
     width: 470px;
@@ -108,16 +109,7 @@
     justify-content: space-around;
     margin-top: 40px;
   }
-  .buttons button{
-    height: 45px;
-    width: 200px;
-    margin-bottom: 10px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    background-color: #1976D2;
-    border-radius: 10px;
-  }
+ 
 
 
 .review-display{
@@ -173,3 +165,18 @@
   text-align: center;
   padding-bottom: 30px;
 }
+
+
+ .buttons button{
+    height: 45px;
+    width: 200px;
+    margin-bottom: 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #1976D2;
+    border-radius: 10px;
+  }
+
+
+  
